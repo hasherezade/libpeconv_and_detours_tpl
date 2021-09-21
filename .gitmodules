@@ -1,3 +1,6 @@
 [submodule "libdetours/Detours"]
 	path = libdetours/Detours
 	url = https://github.com/microsoft/Detours.git
+[submodule "libpeconv"]
+	path = libpeconv
+	url = https://github.com/hasherezade/libpeconv.git
