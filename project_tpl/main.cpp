@@ -1,6 +1,8 @@
 #include <windows.h>
-#include <detours.h>
 #include <iostream>
+
+#include <detours.h> // include MS Detours header
+#include <peconv.h> // include libPeConv header
 
 int (WINAPI *pMessageBoxA)(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) = ::MessageBoxA;
 
