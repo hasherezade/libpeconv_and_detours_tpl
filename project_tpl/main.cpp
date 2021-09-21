@@ -22,17 +22,14 @@ int WINAPI my_MessageBoxA(
 
 void hook_apis()
 {
+    //initialize hooking:
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourAttach(&(PVOID&)pMessageBoxA, my_MessageBoxA);
-    DetourTransactionCommit();
-}
 
-void unhook_apis()
-{
-    DetourTransactionBegin();
-    DetourUpdateThread(GetCurrentThread());
-    DetourDetach(&(PVOID&)pMessageBoxA, my_MessageBoxA);
+    // the APIs that we want to hook:
+    DetourAttach(&(PVOID&)pMessageBoxA, my_MessageBoxA);
+
+    //finalize hooking:
     DetourTransactionCommit();
 }
 
@@ -84,13 +81,17 @@ int main(int argc, char *argv[])
         return 0;
     }
     const LPCSTR pe_path = argv[1];
+
+    // manually load an EXE with libPEConv:
     if (!load_pe(pe_path)) {
         std::cout << "[-] Loading the PE: "<< pe_path << " failed!\n";
+        return -1;
     }
 
     hook_apis();
     MessageBoxA(NULL, "Message Box Hooked", "OK", MB_OK);
 
+    // run the manually loaded EXE:
     run_pe_entrypoint(g_PEBuf);
     system("pause");
     return 0;
