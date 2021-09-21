@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
     MessageBoxA(NULL, "Message Box Hooked", "OK", MB_OK);
 
     // run the manually loaded EXE:
-    run_pe_entrypoint(g_PEBuf);
+    int res = run_pe_entrypoint(g_PEBuf);
     system("pause");
-    return 0;
+    return res;
 }
